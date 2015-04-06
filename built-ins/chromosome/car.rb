@@ -1,6 +1,7 @@
 # encoding: utf-8
 import('../type/chromosome')
 
+
 define_type(:car) do
   extends(:chromosome)
   composer do
@@ -15,7 +16,7 @@ define_specification(:car) do
 
   # The name of this particular combatant.
   attribute :name,  ruby(:string)
-
+  attribute :header,  ruby(:string)
   # Constructs a new robocode chromosome.
   constructor [
 
@@ -42,14 +43,22 @@ define_specification(:car) do
     #      #{body}
     #      }"
 
-    body = "testing
 
-#{body}"
+###################################
+    header = File.read("#{Dir.home}/UGV/dumbCarHeader.txt")
+body = "#{header}
+
+
+    #{body}"
+####################################
 
 
     x = "#{self}"
     x.slice!("#<Chromosome::Car:")
     x.slice!(">")
+
+    print ("self=")
+    print (x)
 
 
     # Write the code to a Java file in the evolved robots directory.
