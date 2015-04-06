@@ -46,7 +46,7 @@ define_specification(:car) do
 
 ###################################
     header = File.read("#{Dir.home}/UGV/dumbCarHeader.txt")
-body = "#{header}
+    body = "#{header}
 
 
     #{body}"
