@@ -19,7 +19,7 @@ import modeling.*;
  * to simulate drunk-driving as a future test scenario.  Other similar movement variation could be introduced.
  */
 
-public abstract class DumbCarImpl extends Car {
+public class DumbCarImpl extends Car {
 
     public DumbCarImpl(int idNo, CarPerformance performance,
     			double initialBearing) {

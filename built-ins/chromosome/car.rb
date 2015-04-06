@@ -63,6 +63,7 @@ define_specification(:car) do
 
     # Write the code to a Java file in the evolved robots directory.
     #File.write("#{robots_path}/#{x}/#{name}.java", body)
+    FileUtils.rm_rf("#{Dir.home}/UGV/evolved/.", secure: true)
     FileUtils.mkdir_p("#{Dir.home}/UGV/evolved/#{x}")
     File.write("#{Dir.home}/UGV/evolved/#{x}/#{name}.java", body)
 

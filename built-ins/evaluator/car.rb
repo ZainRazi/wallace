@@ -148,18 +148,15 @@ define_specification :car do
     #print(body)
 
     x = "#{body}"
-    x.slice!("#<Chromosome::Car:-")
+    x.slice!("#<Chromosome::Car:")
     x.slice!(">")
 
     print "body="
-    print body
+    print x
 
-    cmd = "java -classpath ~/UGV/bin dominant.SimulationWithEvolvedCars -#{x}"
+    cmd = "java -classpath ~/UGV/bin dominant.SimulationWithEvolvedCars #{x}"
     
     system(cmd)
-
-    #print "!"
-    #print body
 
     return 1
   end
