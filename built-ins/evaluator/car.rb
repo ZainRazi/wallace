@@ -165,7 +165,11 @@ define_specification :car do
 
     array = Array.new
 
-    File.open( "#{Dir.home}/UGV/FitnessLog.txt" ).each do |line|
+    if !(File.file?("#{Dir.home}/wallaceTest/FitnessLog.txt"))
+      return 0
+    end
+
+    File.open( "#{Dir.home}/wallaceTest/FitnessLog.txt" ).each do |line|
 
       array = line.split(' ')
 
@@ -251,6 +255,9 @@ define_specification :car do
       end
       array = Array.new
     end
+
+
+    FileUtils.rm_rf("#{Dir.home}/wallaceTest/FitnessLog.txt", secure: true)
 
     return forceOffLine.count + parked.count + crossedLine.count + collideCar.count
 

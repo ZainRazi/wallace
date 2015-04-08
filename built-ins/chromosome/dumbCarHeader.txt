@@ -21,10 +21,14 @@ import modeling.*;
 
 public class DumbCarImpl extends Car {
 
+    private double initialBearing;
+
     public DumbCarImpl(int idNo, CarPerformance performance,
     			double initialBearing) {
     		super(idNo, performance, initialBearing);
     		// NOTE: The targetId of a DumbCar will be -1 as it does not have a target
+
+    		this.initialBearing = initialBearing;
         }
 
     @Override
