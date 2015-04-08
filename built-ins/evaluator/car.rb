@@ -95,7 +95,7 @@ define_specification :car do
       workload = calculate_workload(evals, threads)
 
 
-      FileUtils.rm_rf("#{Dir.home}/UGV/evolved/.", secure: true)
+      #FileUtils.rm_rf("#{Dir.home}/UGV/evolved/.", secure: true)
 
       viable = 0
       cars = Array.new(evals)
@@ -158,7 +158,102 @@ define_specification :car do
     
     system(cmd)
 
-    return 1
+    forceOffLine = Array.new
+    parked = Array.new
+    crossedLine = Array.new
+    collideCar = Array.new
+
+    array = Array.new
+
+    File.open( "#{Dir.home}/UGV/FitnessLog.txt" ).each do |line|
+
+      array = line.split(' ')
+
+
+
+      number1 = array[2].split(',')
+      number1[0].slice!("car1Location:Double2D[")
+      number1[1].slice!("]")
+      number2 = array[3].split(',')
+      number2[0].slice!("car2Location:Double2D[")
+      number2[1].slice!("]")
+      n1 = number1[0].to_i - number2[0].to_i
+      n2 = number1[1].to_i - number2[1].to_i
+
+      v1 = [n1,n2]
+
+
+      if array[0] == "forcedOffRoad:"
+        if forceOffLine.empty?
+            forceOffLine.push(v1)
+        else
+          flag = true
+          forceOffLine.each do |z|
+            if(z[0] - v1[0]).abs < 5
+              if(z[1] - v1[1]).abs < 5
+                flag = false
+              end
+            end
+          end
+          if flag
+            forceOffLine.push(v1)
+          end
+        end
+      elsif array[0] == "collisionWithParkedCar:"
+        if parked.empty?
+          parked.push(v1)
+        else
+          flag = true
+          parked.each do |z|
+            if(z[0] - v1[0]).abs < 5
+              if(z[1] - v1[1]).abs < 5
+                flag = false
+              end
+            end
+          end
+          if flag
+            parked.push(v1)
+          end
+        end
+      elsif array[0] == "crossedLine:"
+        if crossedLine.empty?
+          crossedLine.push(v1)
+        else
+          flag = true
+          crossedLine.each do |z|
+            if(z[0] - v1[0]).abs < 5
+              if(z[1] - v1[1]).abs < 5
+                flag = false
+              end
+            end
+          end
+          if flag
+            crossedLine.push(v1)
+          end
+        end
+      elsif array[0] == "collisionWithOtherCar:"
+        if collideCar.empty?
+          collideCar.push(v1)
+        else
+          flag = true
+          collideCar.each do |z|
+            if(z[0] - v1[0]).abs < 5
+              if(z[1] - v1[1]).abs < 5
+                flag = false
+              end
+            end
+          end
+          if flag
+            collideCar.push(v1)
+          end
+        end
+
+      end
+      array = Array.new
+    end
+
+    return forceOffLine.count + parked.count + crossedLine.count + collideCar.count
+
   end
 
 
